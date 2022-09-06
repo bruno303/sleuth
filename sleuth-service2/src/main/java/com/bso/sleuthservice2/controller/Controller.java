@@ -1,7 +1,7 @@
 package com.bso.sleuthservice2.controller;
 
+import com.bso.sleuthservice2.infra.aws.message.sender.MessageSender;
 import com.bso.sleuthservice2.model.MyObject;
-import com.bso.sleuthservice2.sqs.SqsSender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class Controller {
 
-    private final SqsSender sqsSender;
+    private final MessageSender messageSender;
 
     @PostMapping
     public void request(@RequestBody MyObject myObject) {
         log.info("[{}] Received", myObject.id());
-        sqsSender.send(myObject, "my-queue");
+        messageSender.send(myObject, "my-queue");
     }
 }

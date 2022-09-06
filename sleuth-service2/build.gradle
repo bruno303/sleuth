@@ -14,13 +14,16 @@ repositories {
 
 ext {
 	set('springCloudVersion', "2021.0.3")
+	set('springCloudAwsVersion', '2.4.2')
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	//implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
+	implementation platform('software.amazon.awssdk:bom:2.15.0')
+	implementation 'software.amazon.awssdk:sqs'
+	implementation "io.awspring.cloud:spring-cloud-aws-autoconfigure:${springCloudAwsVersion}"
+	implementation "io.awspring.cloud:spring-cloud-aws-messaging:${springCloudAwsVersion}"
 	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
-	implementation "org.springframework.cloud:spring-cloud-aws-messaging:2.2.6.RELEASE"
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
