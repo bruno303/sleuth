@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(
         name = "service2",
-        url = "${external-services.service2.url:http://localhost:8081/object}"
+        url = "${external-services.service2.url}/object"
 )
 public interface Service2Feign {
     @PostMapping
