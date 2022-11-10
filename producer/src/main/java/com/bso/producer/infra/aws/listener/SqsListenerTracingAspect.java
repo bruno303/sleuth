@@ -25,11 +25,16 @@ public class SqsListenerTracingAspect {
 
     @Around("@annotation(io.awspring.cloud.messaging.listener.annotation.SqsListener)")
     public Object listenWithTrace(ProceedingJoinPoint joinPoint) throws Throwable {
-        Message<?> message = (Message<?>) joinPoint.getArgs()[0];
+        Object[] args = joinPoint.getArgs();
+        if (args == null || args.length == 0) return joinPoint.proceed(args);
+
+        Message<?> message = (Message<?>) args[0];
         TraceContextOrSamplingFlags ctx = extractor.extract(message.getHeaders());
         Span span = tracer.nextSpan(ctx);
-        try (var ignored = tracer.withSpanInScope(span)) {
-            return joinPoint.proceed(joinPoint.getArgs());
+        try (Tracer.SpanInScope ignored = tracer.withSpanInScope(span.start())) {
+            return joinPoint.proceed(args);
+        } finally {
+            span.finish();
         }
     }
 

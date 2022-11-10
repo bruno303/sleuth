@@ -21,3 +21,8 @@ try (var ws = tracer.withSpanInScope(span)) {
 ```
 Inside the `try-with-resources`, logs will have traceId and spanId correctly configured.
 
+
+## References
+* [json-logging](https://dev.to/anandsunderraman/json-logging-in-spring-boot-applications-2j33)
+* [spring-boot logging](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.logging.custom-log-configuration)
+* [logback layouts](https://logback.qos.ch/manual/layouts.html)
